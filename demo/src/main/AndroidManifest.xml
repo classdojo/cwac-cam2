@@ -24,7 +24,7 @@
     <activity
       android:name="com.commonsware.cwac.cam2.CameraActivity"
       android:process=":cwac_cam2"
-      android:theme="@style/AppTheme"/>
+      android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
   </application>
 
 </manifest>

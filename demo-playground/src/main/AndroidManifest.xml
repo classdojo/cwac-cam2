@@ -36,11 +36,11 @@
     <activity
       android:name="com.commonsware.cwac.cam2.CameraActivity"
       android:process=":cwac_cam2"
-      android:theme="@style/Cam2OverrideTheme"/>
+      android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
     <activity
       android:name="com.commonsware.cwac.cam2.VideoRecorderActivity"
       android:process=":cwac_cam2"
-      android:theme="@style/Cam2OverrideTheme"/>
+      android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar"/>
     <activity android:name=".VideoPlayerActivity"/>
   </application>
 

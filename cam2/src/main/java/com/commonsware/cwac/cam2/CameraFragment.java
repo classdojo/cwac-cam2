@@ -21,6 +21,7 @@ import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -32,10 +33,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
 import java.io.File;
 import java.util.LinkedList;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -52,10 +56,14 @@ public class CameraFragment extends Fragment {
   private CameraController ctlr;
   private ViewGroup previewStack;
   private FloatingActionButton fabPicture;
-  private FloatingActionButton fabSwitch;
+//  private FloatingActionButton fabSwitch;
   private View progress;
   private boolean isVideoRecording=false;
   private boolean mirrorPreview=false;
+  private ImageView ivCloseCamera;
+  private ImageView ivSwitchCamera;
+  private ImageView ivSwitchType;
+
 
   public static CameraFragment newPictureInstance(Uri output,
                                                   boolean updateMediaStore) {
@@ -138,7 +146,8 @@ public class CameraFragment extends Fragment {
 
       if (fabPicture!=null) {
         fabPicture.setEnabled(true);
-        fabSwitch.setEnabled(true);
+        ivSwitchCamera.setEnabled(true);
+        ivSwitchType.setEnabled(true);
       }
     }
   }
@@ -201,23 +210,49 @@ public class CameraFragment extends Fragment {
       }
     });
 
-    fabSwitch=(FloatingActionButton)v.findViewById(R.id.cwac_cam2_switch_camera);
-    fabSwitch.setOnClickListener(new View.OnClickListener() {
+    ivCloseCamera = (ImageView) v.findViewById(R.id.cwac_cam2_close_camera);
+    ivCloseCamera.setOnClickListener(new View.OnClickListener() {
       @Override
-      public void onClick(View view) {
+      public void onClick(View v) {
+       getActivity().finish();
+      }
+    });
+
+    ivSwitchCamera = (ImageView) v.findViewById(R.id.cwac_cam2_switch_camera);
+    ivSwitchCamera.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
         progress.setVisibility(View.VISIBLE);
-        fabSwitch.setEnabled(false);
+        ivSwitchCamera.setEnabled(false);
         ctlr.switchCamera();
       }
     });
 
-    changeMenuIconAnimation((FloatingActionMenu)v.findViewById(R.id.cwac_cam2_settings));
+    ivSwitchType = (ImageView) v.findViewById(R.id.cwac_cam2_switch_type);
+    ivSwitchType.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        ivSwitchType.setEnabled(false);
+        VideoRecorderActivity.IntentBuilder b = new VideoRecorderActivity.IntentBuilder(getActivity());
+        File f = new File(getActivity().getExternalFilesDir(null), "cwac.mp4");
+
+        b.to(f);
+        b.quality(VideoRecorderActivity.Quality.LOW);
+        Intent result = b.build();
+        startActivity(result);
+        getActivity().finish();
+      }
+    });
+
+
+//    changeMenuIconAnimation((FloatingActionMenu)v.findViewById(R.id.cwac_cam2_settings));
 
     onHiddenChanged(false); // hack, since this does not get
                             // called on initial display
     
     fabPicture.setEnabled(false);
-    fabSwitch.setEnabled(false);
+    ivSwitchCamera.setEnabled(false);
+    ivSwitchType.setEnabled(false);
 
     if (ctlr!=null && ctlr.getNumberOfCameras()>0) {
       prepController();
@@ -264,7 +299,8 @@ public class CameraFragment extends Fragment {
   public void onEventMainThread(CameraEngine.OpenedEvent event) {
     if (event.exception==null) {
       progress.setVisibility(View.GONE);
-      fabSwitch.setEnabled(true);
+      ivSwitchCamera.setEnabled(true);
+      ivSwitchType.setEnabled(true);
       fabPicture.setEnabled(true);
     }
     else {
@@ -321,7 +357,8 @@ public class CameraFragment extends Fragment {
     }
 
     fabPicture.setEnabled(false);
-    fabSwitch.setEnabled(false);
+    ivSwitchCamera.setEnabled(false);
+    ivSwitchType.setEnabled(false);
     ctlr.takePicture(b.build());
   }
 
