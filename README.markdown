@@ -37,12 +37,12 @@ To integrate the core AAR, the Gradle recipe is:
 ```groovy
 repositories {
     maven {
-        url "https://s3.amazonaws.com/repo.commonsware.com"
+        url "https://jitpack.io"
     }
 }
 
 dependencies {
-    compile 'com.commonsware.cwac:cam2:0.4.+'
+    compile 'com.github.mPetrus:cwac-cam2:v0.4.4.3'
 }
 ```
 
