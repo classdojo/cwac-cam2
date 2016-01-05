@@ -19,6 +19,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +54,8 @@ public class CameraFragment extends Fragment {
   private static final String ARG_VIDEO_QUALITY="quality";
   private static final String ARG_SIZE_LIMIT="sizeLimit";
   private static final String ARG_DURATION_LIMIT="durationLimit";
+  public static final String PHOTO_CAMERA = "photo_camera";
+  public static final String VIDEO_CAMERA = "video_camera";
   private CameraController ctlr;
   private ViewGroup previewStack;
   private FloatingActionButton fabPicture;
@@ -63,7 +66,6 @@ public class CameraFragment extends Fragment {
   private ImageView ivCloseCamera;
   private ImageView ivSwitchCamera;
   private ImageView ivSwitchType;
-
 
   public static CameraFragment newPictureInstance(Uri output,
                                                   boolean updateMediaStore) {
@@ -233,13 +235,15 @@ public class CameraFragment extends Fragment {
       @Override
       public void onClick(View v) {
         ivSwitchType.setEnabled(false);
-        VideoRecorderActivity.IntentBuilder b = new VideoRecorderActivity.IntentBuilder(getActivity());
-        File f = new File(getActivity().getExternalFilesDir(null), "cwac.mp4");
+        Intent result = new Intent();
 
-        b.to(f);
-        b.quality(VideoRecorderActivity.Quality.LOW);
-        Intent result = b.build();
-        startActivity(result);
+        if(isVideo()){
+          result.putExtra(PHOTO_CAMERA, true);
+          getActivity().setResult(Activity.RESULT_OK, result);
+        }else {
+          result.putExtra(VIDEO_CAMERA, true);
+          getActivity().setResult(Activity.RESULT_OK, result);
+        }
         getActivity().finish();
       }
     });
