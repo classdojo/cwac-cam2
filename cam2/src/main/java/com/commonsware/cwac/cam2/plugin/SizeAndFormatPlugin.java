@@ -16,16 +16,14 @@ package com.commonsware.cwac.cam2.plugin;
 
 import android.annotation.TargetApi;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CaptureRequest;
 import android.media.CamcorderProfile;
 import android.media.ImageReader;
 import android.media.MediaRecorder;
 import android.os.Build;
+
 import com.commonsware.cwac.cam2.CameraConfigurator;
 import com.commonsware.cwac.cam2.CameraPlugin;
 import com.commonsware.cwac.cam2.CameraSession;
-import com.commonsware.cwac.cam2.CameraTwoConfigurator;
 import com.commonsware.cwac.cam2.ClassicCameraConfigurator;
 import com.commonsware.cwac.cam2.SimpleCameraTwoConfigurator;
 import com.commonsware.cwac.cam2.SimpleClassicCameraConfigurator;
@@ -114,23 +112,25 @@ public class SizeAndFormatPlugin implements CameraPlugin {
     public void configureRecorder(int cameraId,
                                   VideoTransaction xact,
                                   MediaRecorder recorder) {
-      boolean canGoHigh=CamcorderProfile.hasProfile(cameraId,
-        CamcorderProfile.QUALITY_HIGH);
-      boolean canGoLow=CamcorderProfile.hasProfile(cameraId,
-        CamcorderProfile.QUALITY_LOW);
-
-      if (canGoHigh && (xact.getQuality()==1 || !canGoLow)) {
-        recorder.setProfile(CamcorderProfile.get(cameraId,
-          CamcorderProfile.QUALITY_HIGH));
-      }
-      else if (canGoLow) {
-        recorder.setProfile(CamcorderProfile.get(cameraId,
-          CamcorderProfile.QUALITY_LOW));
-      }
-      else {
-        throw new IllegalStateException(
-          "cannot find valid CamcorderProfile");
-      }
+      recorder.setProfile(CamcorderProfile.get(cameraId,
+              CamcorderProfile.QUALITY_480P));
+//      boolean canGoHigh=CamcorderProfile.hasProfile(cameraId,
+//        CamcorderProfile.QUALITY_HIGH);
+//      boolean canGoLow=CamcorderProfile.hasProfile(cameraId,
+//        CamcorderProfile.QUALITY_LOW);
+//
+//      if (canGoHigh && (xact.getQuality()==1 || !canGoLow)) {
+//        recorder.setProfile(CamcorderProfile.get(cameraId,
+//          CamcorderProfile.QUALITY_HIGH));
+//      }
+//      else if (canGoLow) {
+//        recorder.setProfile(CamcorderProfile.get(cameraId,
+//          CamcorderProfile.QUALITY_LOW));
+//      }
+//      else {
+//        throw new IllegalStateException(
+//          "cannot find valid CamcorderProfile");
+//      }
     }
   }
 
