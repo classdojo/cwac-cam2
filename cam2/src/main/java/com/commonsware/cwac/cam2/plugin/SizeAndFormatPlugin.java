@@ -114,6 +114,7 @@ public class SizeAndFormatPlugin implements CameraPlugin {
                                   MediaRecorder recorder) {
       recorder.setProfile(CamcorderProfile.get(cameraId,
               CamcorderProfile.QUALITY_480P));
+      recorder.setVideoEncodingBitRate(3000);
 //      boolean canGoHigh=CamcorderProfile.hasProfile(cameraId,
 //        CamcorderProfile.QUALITY_HIGH);
 //      boolean canGoLow=CamcorderProfile.hasProfile(cameraId,
