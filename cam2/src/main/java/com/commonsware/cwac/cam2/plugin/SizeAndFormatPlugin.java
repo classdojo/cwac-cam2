@@ -90,6 +90,9 @@ public class SizeAndFormatPlugin implements CameraPlugin {
   }
 
   class Classic extends SimpleClassicCameraConfigurator {
+    private static final int VIDEO_BIT_RATE = 1500000;//3000000
+
+
     /**
      * {@inheritDoc}
      */
@@ -114,7 +117,7 @@ public class SizeAndFormatPlugin implements CameraPlugin {
                                   MediaRecorder recorder) {
       recorder.setProfile(CamcorderProfile.get(cameraId,
               CamcorderProfile.QUALITY_480P));
-      recorder.setVideoEncodingBitRate(3000000);
+      recorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
 //      boolean canGoHigh=CamcorderProfile.hasProfile(cameraId,
 //        CamcorderProfile.QUALITY_HIGH);
 //      boolean canGoLow=CamcorderProfile.hasProfile(cameraId,
