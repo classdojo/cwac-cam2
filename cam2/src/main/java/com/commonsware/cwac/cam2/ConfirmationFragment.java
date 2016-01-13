@@ -73,7 +73,7 @@ public class ConfirmationFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View v =inflater.inflate(R.layout.cwac_cam2_confirm_fragment, container, false);
     iv = (ImageView) v.findViewById(R.id.cwac_cam2_fragment_confirmation_preview_image);
-    mVideoView = (VideoView) v.findViewById(R.id.cwac_cam2_fragment_confirmation_preview_image);
+    mVideoView = (VideoView) v.findViewById(R.id.cwac_cam2_fragment_confirmation_preview_video);
     if (imageContext!=null) {
       loadImage();
     }
