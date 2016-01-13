@@ -25,11 +25,40 @@ import android.provider.MediaStore;
  * Supports the same protocol, in terms of extras and return data,\
  * as does ACTION_VIDEO_CAPTURE.
  */
-public class VideoRecorderActivity extends AbstractCameraActivity {
+public class VideoRecorderActivity extends AbstractCameraActivity implements ConfirmationFragment.Contract{
   private static final String[] PERMS={
     Manifest.permission.CAMERA,
     Manifest.permission.WRITE_EXTERNAL_STORAGE,
     Manifest.permission.RECORD_AUDIO};
+  private ConfirmationFragment confirmFrag;
+  private static final String TAG_CONFIRM=ConfirmationFragment.class.getCanonicalName();
+
+  @Override
+  public void completeRequest(ImageContext imageContext, boolean isOK) {
+    if (!isOK) {
+      setResult(RESULT_CANCELED);
+      finish();
+    }
+    else {
+      findViewById(android.R.id.content).post(new Runnable() {
+        @Override
+        public void run() {
+          setResult(RESULT_OK, new Intent().setData(getOutputUri()));
+          finish();
+        }
+      });
+    }
+  }
+
+
+  @Override
+  public void retakePicture() {
+    getFragmentManager()
+            .beginTransaction()
+            .hide(confirmFrag)
+            .show(cameraFrag)
+            .commit();
+  }
 
   @Override
   protected String[] getNeededPermissions() {
@@ -57,6 +86,29 @@ public class VideoRecorderActivity extends AbstractCameraActivity {
   }
 
   @Override
+  protected void init() {
+    super.init();
+
+    confirmFrag=(ConfirmationFragment)getFragmentManager().findFragmentByTag(TAG_CONFIRM);
+
+    if (confirmFrag==null) {
+      confirmFrag=ConfirmationFragment.newInstance();
+      getFragmentManager()
+              .beginTransaction()
+              .add(android.R.id.content, confirmFrag, TAG_CONFIRM)
+              .commit();
+    }
+
+    if (!cameraFrag.isVisible() && !confirmFrag.isVisible()) {
+      getFragmentManager()
+              .beginTransaction()
+              .hide(confirmFrag)
+              .show(cameraFrag)
+              .commit();
+    }
+  }
+
+  @Override
   protected CameraFragment buildFragment() {
     return(CameraFragment.newVideoInstance(getOutputUri(),
         getIntent().getBooleanExtra(EXTRA_UPDATE_MEDIA_STORE, false),
@@ -73,13 +125,21 @@ public class VideoRecorderActivity extends AbstractCameraActivity {
       // TODO: something with the exception
     }
     else {
-      findViewById(android.R.id.content).post(new Runnable() {
-        @Override
-        public void run() {
-         setResult(RESULT_OK, new Intent().setData(getOutputUri()));
-         finish();
-        }
-      });
+      confirmFrag.setVideo(getOutputUri());
+
+      getFragmentManager()
+              .beginTransaction()
+              .hide(cameraFrag)
+              .show(confirmFrag)
+              .commit();
+
+//      findViewById(android.R.id.content).post(new Runnable() {
+//        @Override
+//        public void run() {
+//         setResult(RESULT_OK, new Intent().setData(getOutputUri()));
+//         finish();
+//        }
+//      });
     }
   }
 

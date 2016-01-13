@@ -14,10 +14,11 @@
 
 package com.commonsware.cwac.cam2;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.Build;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +26,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
+
 
 public class ConfirmationFragment extends Fragment {
   public interface Contract {
@@ -35,6 +40,8 @@ public class ConfirmationFragment extends Fragment {
 
   private ImageView iv;
   private ImageContext imageContext;
+  private Uri videoUri;
+  private VideoView mVideoView;
 
   public static ConfirmationFragment newInstance() {
     ConfirmationFragment result=new ConfirmationFragment();
@@ -64,43 +71,65 @@ public class ConfirmationFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    iv=new ImageView(getActivity());
-
+    View v =inflater.inflate(R.layout.cwac_cam2_confirm_fragment, container, false);
+    iv = (ImageView) v.findViewById(R.id.cwac_cam2_fragment_confirmation_preview_image);
+    mVideoView = (VideoView) v.findViewById(R.id.cwac_cam2_fragment_confirmation_preview_image);
     if (imageContext!=null) {
       loadImage();
     }
 
-    return(iv);
-  }
-
-  @Override
-  public void onHiddenChanged(boolean isHidden) {
-    super.onHiddenChanged(isHidden);
-
-    if (!isHidden) {
-      ActionBar ab=getActivity().getActionBar();
-
-      if (ab==null) {
-        throw new IllegalStateException("CameraActivity confirmation requires an action bar!");
-      }
-      else {
-        ab.setBackgroundDrawable(getActivity()
-            .getResources()
-            .getDrawable(R.drawable.cwac_cam2_action_bar_bg_translucent));
-        ab.setTitle("");
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          ab.setDisplayHomeAsUpEnabled(true);
-          ab.setHomeAsUpIndicator(R.drawable.cwac_cam2_ic_close_white);
-        }
-        else {
-          ab.setIcon(R.drawable.cwac_cam2_ic_close_white);
-          ab.setDisplayShowHomeEnabled(true);
-          ab.setHomeButtonEnabled(true);
-        }
-      }
+    if(videoUri!=null){
+      loadVideo();
     }
+
+    Button btnConfirm = (Button) v.findViewById(R.id.cwac_cam2_fragment_confirmation_confirm_btn);
+    Button btnCancel = (Button) v.findViewById(R.id.cwac_cam2_fragment_confirmation_retake_btn);
+
+    btnConfirm.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        getContract().completeRequest(imageContext, true);
+      }
+    });
+
+    btnCancel.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        getContract().retakePicture();
+      }
+    });
+
+    return(v);
   }
+
+//  @Override
+//  public void onHiddenChanged(boolean isHidden) {
+//    super.onHiddenChanged(isHidden);
+//
+//    if (!isHidden) {
+//      ActionBar ab=getActivity().getActionBar();
+//
+//      if (ab==null) {
+//        throw new IllegalStateException("CameraActivity confirmation requires an action bar!");
+//      }
+//      else {
+//        ab.setBackgroundDrawable(getActivity()
+//            .getResources()
+//            .getDrawable(R.drawable.cwac_cam2_action_bar_bg_translucent));
+//        ab.setTitle("");
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//          ab.setDisplayHomeAsUpEnabled(true);
+//          ab.setHomeAsUpIndicator(R.drawable.cwac_cam2_ic_close_white);
+//        }
+//        else {
+//          ab.setIcon(R.drawable.cwac_cam2_ic_close_white);
+//          ab.setDisplayShowHomeEnabled(true);
+//          ab.setHomeButtonEnabled(true);
+//        }
+//      }
+//    }
+//  }
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -133,11 +162,33 @@ public class ConfirmationFragment extends Fragment {
     }
   }
 
+  public void setVideo(Uri videoUri) {
+    this.videoUri=videoUri;
+
+    if (mVideoView!=null) {
+      loadVideo();
+    }
+  }
+
   private Contract getContract() {
     return((Contract)getActivity());
   }
 
   private void loadImage() {
-    iv.setImageBitmap(imageContext.buildPreviewThumbnail());
+//    iv.setImageBitmap(imageContext.buildPreviewThumbnail());
+    Bitmap bm = BitmapFactory.decodeByteArray(imageContext.getJpeg(), 0, imageContext.getJpeg().length);
+    iv.setImageBitmap(bm);
+    iv.setVisibility(View.VISIBLE);
+    mVideoView.setVisibility(View.GONE);
+  }
+
+  private void loadVideo() {
+    MediaController mediacontroller = new MediaController(getActivity());
+    mediacontroller.setAnchorView(mVideoView);
+    mVideoView.setMediaController(mediacontroller);
+    mVideoView.setVideoURI(videoUri);
+    iv.setVisibility(View.GONE);
+    mVideoView.setVisibility(View.VISIBLE);
+    mVideoView.start();
   }
 }
