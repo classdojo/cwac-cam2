@@ -19,10 +19,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -65,7 +63,6 @@ public class CameraFragment extends Fragment {
   private boolean mirrorPreview=false;
   private ImageView ivCloseCamera;
   private ImageView ivSwitchCamera;
-  private ImageView ivSwitchType;
 
   public static CameraFragment newPictureInstance(Uri output,
                                                   boolean updateMediaStore) {
@@ -149,7 +146,6 @@ public class CameraFragment extends Fragment {
       if (fabPicture!=null) {
         fabPicture.setEnabled(true);
         ivSwitchCamera.setEnabled(true);
-        ivSwitchType.setEnabled(true);
       }
     }
   }
@@ -230,24 +226,6 @@ public class CameraFragment extends Fragment {
       }
     });
 
-    ivSwitchType = (ImageView) v.findViewById(R.id.cwac_cam2_switch_type);
-    ivSwitchType.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ivSwitchType.setEnabled(false);
-        Intent result = new Intent();
-
-        if(isVideo()){
-          result.putExtra(PHOTO_CAMERA, true);
-          getActivity().setResult(Activity.RESULT_OK, result);
-        }else {
-          result.putExtra(VIDEO_CAMERA, true);
-          getActivity().setResult(Activity.RESULT_OK, result);
-        }
-        getActivity().finish();
-      }
-    });
-
 
 //    changeMenuIconAnimation((FloatingActionMenu)v.findViewById(R.id.cwac_cam2_settings));
 
@@ -256,7 +234,6 @@ public class CameraFragment extends Fragment {
     
     fabPicture.setEnabled(false);
     ivSwitchCamera.setEnabled(false);
-    ivSwitchType.setEnabled(false);
 
     if (ctlr!=null && ctlr.getNumberOfCameras()>0) {
       prepController();
@@ -304,7 +281,6 @@ public class CameraFragment extends Fragment {
     if (event.exception==null) {
       progress.setVisibility(View.GONE);
       ivSwitchCamera.setEnabled(true);
-      ivSwitchType.setEnabled(true);
       fabPicture.setEnabled(true);
     }
     else {
@@ -362,7 +338,6 @@ public class CameraFragment extends Fragment {
 
     fabPicture.setEnabled(false);
     ivSwitchCamera.setEnabled(false);
-    ivSwitchType.setEnabled(false);
     ctlr.takePicture(b.build());
   }
 

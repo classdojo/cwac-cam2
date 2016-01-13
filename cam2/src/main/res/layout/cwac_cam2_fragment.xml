@@ -84,13 +84,4 @@
 			<!--fab:fab_size="mini"/>-->
 
 	<!--</com.github.clans.fab.FloatingActionMenu>-->
-
-	<ImageView
-		android:padding="16dp"
-		android:id="@+id/cwac_cam2_switch_type"
-		android:src="@drawable/cwac_cam2_ic_action_settings"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentBottom="true"/>
 </RelativeLayout>
