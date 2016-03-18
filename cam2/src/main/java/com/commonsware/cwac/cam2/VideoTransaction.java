@@ -16,6 +16,7 @@ package com.commonsware.cwac.cam2;
 
 import java.io.File;
 
+
 public class VideoTransaction {
   File outputPath;
   int quality=1;

@@ -14,9 +14,10 @@
 
 package com.commonsware.cwac.cam2;
 
-import android.graphics.ImageFormat;
 import com.commonsware.cwac.cam2.util.Size;
+
 import java.util.ArrayList;
+
 
 /**
  * A representation of a camera. Specific camera engines will

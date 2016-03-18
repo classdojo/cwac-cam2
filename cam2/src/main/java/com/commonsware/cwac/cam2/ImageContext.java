@@ -18,6 +18,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+
 /**
  * Represents a picture taken by the camera, to be passed through
  * the ImageProcessor chain.
@@ -97,7 +98,7 @@ public class ImageContext {
   public Bitmap buildResultThumbnail() {
     // TODO: move this onto background thread
 
-    return(createThumbnail(100000.0d, null, 950000));
+    return(createThumbnail(100000.0d, null, 750000));
   }
 
   private Bitmap createThumbnail(double jpegLengthGuess, Bitmap inBitmap, int limit) {

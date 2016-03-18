@@ -30,6 +30,7 @@ import com.commonsware.cwac.cam2.SimpleClassicCameraConfigurator;
 import com.commonsware.cwac.cam2.VideoTransaction;
 import com.commonsware.cwac.cam2.util.Size;
 
+
 /**
  * A plugin that configures the size and format of previews and
  * pictures to be taken by the camera. This, or a plugin like it,
@@ -115,8 +116,9 @@ public class SizeAndFormatPlugin implements CameraPlugin {
     public void configureRecorder(int cameraId,
                                   VideoTransaction xact,
                                   MediaRecorder recorder) {
-      recorder.setProfile(CamcorderProfile.get(cameraId,
-              CamcorderProfile.QUALITY_480P));
+      CamcorderProfile profile = CamcorderProfile.get(cameraId, CamcorderProfile.QUALITY_480P);
+      profile.audioCodec = MediaRecorder.AudioEncoder.AAC;
+      recorder.setProfile(profile);
       recorder.setVideoEncodingBitRate(VIDEO_BIT_RATE);
 //      boolean canGoHigh=CamcorderProfile.hasProfile(cameraId,
 //        CamcorderProfile.QUALITY_HIGH);

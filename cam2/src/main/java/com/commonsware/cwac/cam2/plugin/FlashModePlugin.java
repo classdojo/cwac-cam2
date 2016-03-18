@@ -15,15 +15,13 @@
 package com.commonsware.cwac.cam2.plugin;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.os.Build;
 import android.util.Log;
-import android.view.OrientationEventListener;
-import com.commonsware.cwac.cam2.AbstractCameraActivity;
+
 import com.commonsware.cwac.cam2.CameraConfigurator;
 import com.commonsware.cwac.cam2.CameraPlugin;
 import com.commonsware.cwac.cam2.CameraSession;
@@ -31,7 +29,9 @@ import com.commonsware.cwac.cam2.ClassicCameraConfigurator;
 import com.commonsware.cwac.cam2.FlashMode;
 import com.commonsware.cwac.cam2.SimpleCameraTwoConfigurator;
 import com.commonsware.cwac.cam2.SimpleClassicCameraConfigurator;
+
 import java.util.List;
+
 
 /**
  * Plugin for managing flash modes
@@ -84,16 +84,16 @@ public class FlashModePlugin implements CameraPlugin {
         boolean matched=false;
 
         for (FlashMode mode : flashModes) {
-          if (mode==FlashMode.OFF) {
+          if (mode== FlashMode.OFF) {
             desiredMode=Camera.Parameters.FLASH_MODE_OFF;
           }
-          else if (mode==FlashMode.ALWAYS) {
+          else if (mode== FlashMode.ALWAYS) {
             desiredMode=Camera.Parameters.FLASH_MODE_ON;
           }
-          else if (mode==FlashMode.AUTO) {
+          else if (mode== FlashMode.AUTO) {
             desiredMode=Camera.Parameters.FLASH_MODE_AUTO;
           }
-          else if (mode==FlashMode.REDEYE) {
+          else if (mode== FlashMode.REDEYE) {
             desiredMode=Camera.Parameters.FLASH_MODE_RED_EYE;
           }
 
@@ -156,16 +156,16 @@ public class FlashModePlugin implements CameraPlugin {
       for (FlashMode mode : flashModes) {
         int desiredMode=-1;
 
-        if (mode==FlashMode.OFF) {
+        if (mode== FlashMode.OFF) {
           desiredMode=CameraMetadata.CONTROL_AE_MODE_ON;
         }
-        else if (mode==FlashMode.ALWAYS) {
+        else if (mode== FlashMode.ALWAYS) {
           desiredMode=CameraMetadata.CONTROL_AE_MODE_ON_ALWAYS_FLASH;
         }
-        else if (mode==FlashMode.AUTO) {
+        else if (mode== FlashMode.AUTO) {
           desiredMode=CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH;
         }
-        else if (mode==FlashMode.REDEYE) {
+        else if (mode== FlashMode.REDEYE) {
           desiredMode=CameraMetadata.CONTROL_AE_MODE_ON_AUTO_FLASH_REDEYE;
         }
 

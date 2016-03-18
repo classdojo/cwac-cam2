@@ -18,6 +18,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CaptureRequest;
 import android.media.ImageReader;
 
+
 /**
  * Camera configurator for the CameraTwoEngine, to be used as
  * part of a CameraPlugin for configuring camera behavior.

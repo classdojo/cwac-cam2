@@ -17,8 +17,9 @@ package com.commonsware.cwac.cam2;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import java.io.File;
+
 import java.util.ArrayList;
+
 
 /**
  * Class encapsulating the information needed to take a picture

@@ -14,7 +14,6 @@
 
 package com.commonsware.cwac.cam2.util;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -22,12 +21,15 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
+
 import com.commonsware.cwac.cam2.CameraActivity;
 import com.commonsware.cwac.cam2.CameraDescriptor;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 
 /**
  * Home of static utility methods used by the library and

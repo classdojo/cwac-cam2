@@ -4,6 +4,7 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CaptureRequest;
 import android.media.ImageReader;
 
+
 /**
  * Stub implementation of CameraTwoConfigurator, to help ease
  * the implementation of this interface. Just extend this class

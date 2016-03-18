@@ -15,8 +15,11 @@
 package com.commonsware.cwac.cam2;
 
 import android.content.Context;
+
 import com.commonsware.cwac.cam2.util.Size;
+
 import java.util.ArrayList;
+
 
 /**
  * Class representing a session with a camera. While

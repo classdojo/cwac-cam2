@@ -3,6 +3,7 @@ package com.commonsware.cwac.cam2;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 
+
 /**
  * Stub no-op implementation of ClassicCameraConfigurator,
  * to simplify implementing the interface. Just extend this class,

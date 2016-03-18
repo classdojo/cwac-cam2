@@ -17,9 +17,11 @@ package com.commonsware.cwac.cam2;
 import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+
 
 /**
  * ImageProcessor that writes a JPEG file out to some form

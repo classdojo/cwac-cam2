@@ -17,6 +17,7 @@ package com.commonsware.cwac.cam2;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 
+
 /**
  * Camera configurator for the ClassicCameraEngine, to be used as
  * part of a CameraPlugin for configuring camera behavior.

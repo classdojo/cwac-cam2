@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="cwac_cam2_secondary_fab">#fafafa</color>
-  <color name="cwac_cam2_secondary_fab_pressed">#f1f1f1</color>
-  <color name="cwac_cam2_recording_fab">#da4336</color>
-  <color name="cwac_cam2_recording_fab_pressed">#e75043</color>
-  <color name="cwac_cam2_picture_fab">#00a400</color>
-  <color name="cwac_cam2_picture_fab_pressed">#00da00</color>
-  <color name="cwac_cam2_black">#000000</color>
-  <color name="cwac_cam2_white">#ffffff</color>
+	<color name="cwac_cam2_secondary_fab">#fafafa</color>
+	<color name="cwac_cam2_secondary_fab_pressed">#f1f1f1</color>
+	<color name="cwac_cam2_recording_fab">#da4336</color>
+	<color name="cwac_cam2_recording_fab_pressed">#e75043</color>
+	<color name="cwac_cam2_picture_fab">#00a400</color>
+	<color name="cwac_cam2_picture_fab_pressed">#00da00</color>
+	<color name="cwac_cam2_black">#000000</color>
+
+	<color name="positive_button">#00AEEF</color>
+	<color name="positive_button_pressed">#07BBFF</color>
+	<color name="negative_button">#363636</color>
+	<color name="negative_button_pressed">#6D6D6D</color>
+	<color name="cwac_cam2_background">#1a1a1a</color>
+	<color name="cwac_cam2_white">#ffffff</color>
+	<color name="cam2_dark_alpha">#aa000000</color>
+	<color name="cwac_cam2_progress_bg">#bc9a9a9a</color>
 </resources>

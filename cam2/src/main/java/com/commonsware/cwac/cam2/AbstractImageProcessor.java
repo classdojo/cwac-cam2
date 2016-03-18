@@ -16,6 +16,7 @@ package com.commonsware.cwac.cam2;
 
 import android.content.Context;
 
+
 abstract public class AbstractImageProcessor implements ImageProcessor {
   private final String tag;
   private final Context ctxt;
